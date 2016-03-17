@@ -120,9 +120,27 @@ function Spellcaster(name, health, mana){
    }
 };
 
-
-
-
+this.invoke = function(spell, target) {
+      if (spell instanceof Spell && !(spell instanceof DamageSpell)) {   
+         if(this.spendMana(spell.cost)){
+        return true;
+      }
+      else {return false;}
+    }
+    
+    else if (spell instanceof DamageSpell && target instanceof Spellcaster){
+      console.log('happy');
+      if(this.spendMana(spell.cost)){
+        target.inflictDamage(spell.damage);
+        return true;
+      }
+      else {return false;}
+      return true;
+    }
+    else {
+      return false;
+    }
+  };
   /**
    * @method invoke
    *
@@ -150,3 +168,4 @@ function Spellcaster(name, health, mana){
    * @return {boolean}                    Whether the spell was successfully cast.
    */
 }
+
